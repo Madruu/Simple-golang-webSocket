@@ -24,6 +24,10 @@ func wsHandler(w  http.ResponseWriter, r *http.Request) {
 
 	defer conn.Close();//Close right at end of function
 
+	go handleConnection(conn);
+}
+
+func handleConnection(conn *websocket.Conn){
 	for {
 		//Read message from client
 		_, message, err := conn.ReadMessage();//Message comes in the form of bytes
