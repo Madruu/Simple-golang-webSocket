@@ -44,6 +44,7 @@ func wsHandler(w  http.ResponseWriter, r *http.Request) {
 			mutex.Unlock(); //Unlocks mutex
 			break;
 		}
+
 		broadcast <- message;
 	}
 	
@@ -66,29 +67,7 @@ func handleMessages() {
 	}
 }
 
-// func handleConnection(conn *websocket.Conn){
-// 	for {
-// 		//Read message from client
-// 		_, message, err := conn.ReadMessage();//Message comes in the form of bytes
-// 		if err != nil {
-// 			fmt.Println("Error reading message:", err);
-// 			break;
-// 		}
-
-// 		//Converting from bytes to string
-// 		fmt.Println("Received: %s\\n", string(message));
-		
-
-// 		//Echoes message back to client
-// 		if err := conn.WriteMessage(websocket.TextMessage, message); err != nil {
-// 			fmt.Println("Error writing message:", err);
-// 			break;
-// 		}
-// 	}
-// }
-
 func main(){
-
 	http.Handle("/", http.FileServer(http.Dir(".")))
 	http.HandleFunc("/ws", wsHandler);
 	fmt.Println("WebSocket server started on: 8080");
